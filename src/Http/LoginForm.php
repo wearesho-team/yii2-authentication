@@ -12,8 +12,12 @@ use yii\web;
  * Class LoginForm
  * @package Wearesho\Yii2\Authentication\Http
  */
-class LoginForm extends Http\Form
+class LoginForm extends Http\Panel
 {
+    public $login;
+
+    public $password;
+
     /** @var web\IdentityInterface */
     public $identity;
 
@@ -23,11 +27,10 @@ class LoginForm extends Http\Form
     public function __construct(
         Http\Request $request,
         Http\Response $response,
-        db\Connection $connection,
         Authorization\Repository $repository,
         array $config = []
     ) {
-        parent::__construct($request, $response, $connection, $config);
+        parent::__construct($request, $response, $config);
         $this->authorizationRepository = $repository;
     }
 

@@ -10,7 +10,7 @@ use yii\db;
  * Class LogoutForm
  * @package Wearesho\Yii2\Authentication\Http
  */
-class LogoutForm extends Http\Form
+class LogoutForm extends Http\Panel
 {
     /** @var string */
     public $refresh;
@@ -35,11 +35,10 @@ class LogoutForm extends Http\Form
     public function __construct(
         Http\Request $request,
         Http\Response $response,
-        db\Connection $connection,
         Authorization\Repository $repository,
         array $config = []
     ) {
-        parent::__construct($request, $response, $connection, $config);
+        parent::__construct($request, $response, $config);
         $this->authorizationRepository = $repository;
     }
 
