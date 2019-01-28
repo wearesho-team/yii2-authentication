@@ -1,4 +1,7 @@
 # Yii2 Authentication
+[![Build Status](https://travis-ci.org/wearesho-team/yii2-authentication.svg?branch=master)](https://travis-ci.org/wearesho-team/yii2-authentication)
+[![codecov](https://codecov.io/gh/wearesho-team/yii2-authentication/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/yii2-authentication)
+
 Simple Yii2 library to authenticate API users and generate
 authorization tokens using [wearesho-team/yii2-authorization](https://github.com/wearesho-team/yii2-authorization)
 
