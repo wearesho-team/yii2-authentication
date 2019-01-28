@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae9f0b76f34eb6b650aaa0c9e5860d54",
+    "content-hash": "b91f18342e86291a48930a1267a89834",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -587,57 +587,6 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
-            "name": "squizlabs/php_codesniffer",
-            "version": "3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "379deb987e26c7cd103a7b387aea178baec96e48"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/379deb987e26c7cd103a7b387aea178baec96e48",
-                "reference": "379deb987e26c7cd103a7b387aea178baec96e48",
-                "shasum": ""
-            },
-            "require": {
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
-            },
-            "bin": [
-                "bin/phpcs",
-                "bin/phpcbf"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Greg Sherwood",
-                    "role": "lead"
-                }
-            ],
-            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "http://www.squizlabs.com/php-codesniffer",
-            "keywords": [
-                "phpcs",
-                "standards"
-            ],
-            "time": "2018-12-19T23:57:18+00:00"
-        },
-        {
             "name": "symfony/contracts",
             "version": "v1.0.2",
             "source": {
@@ -946,8 +895,14 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:wearesho-team/yii2-authorization.git",
+                "url": "https://github.com/wearesho-team/yii2-authorization.git",
                 "reference": "146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wearesho-team/yii2-authorization/zipball/146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac",
+                "reference": "146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac",
+                "shasum": ""
             },
             "require": {
                 "horat1us/yii2-environment-config": "^1.0",
@@ -967,25 +922,7 @@
                     "Wearesho\\Yii2\\Authorization\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Wearesho\\Yii2\\Authorization\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "lint": [
-                    "./vendor/bin/phpcs --standard=PSR2 ./src ./tests"
-                ],
-                "phpcbf": [
-                    "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests"
-                ],
-                "test": [
-                    "./vendor/bin/phpunit"
-                ],
-                "cover": [
-                    "./vendor/bin/phpunit --coverage-clover=coverage.xml"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -996,7 +933,7 @@
                 }
             ],
             "description": "Redis Authorization Tokens for Yii2",
-            "time": "2019-01-22T20:19:52+00:00"
+            "time": "2019-01-22T21:32:37+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -2127,16 +2064,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
                 "shasum": ""
             },
             "require": {
@@ -2173,7 +2110,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-01-28T15:26:03+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -2524,6 +2461,57 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/379deb987e26c7cd103a7b387aea178baec96e48",
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2018-12-19T23:57:18+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.1.0",
             "source": {
@@ -2621,7 +2609,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2"
+        "php": ">=7.1"
     },
     "platform-dev": []
 }
