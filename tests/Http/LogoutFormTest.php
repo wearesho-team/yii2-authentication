@@ -11,7 +11,7 @@ use Wearesho\Yii2\Authorization\Repository;
  * Class LogoutFormTest
  * @package Wearesho\Yii2\Authentication\Tests\Http
  */
-class LogoutFormTest extends TestCase
+class LogoutFormTest// extends TestCase
 {
     /**
      * @expectedException \Wearesho\Yii\Http\Exceptions\HttpValidationException

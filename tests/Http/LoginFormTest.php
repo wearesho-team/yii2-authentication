@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication\Http\LoginForm;
 use Wearesho\Yii2\Authentication\Interfaces\IdentitiesRepositoryInterface;
+use Wearesho\Yii2\Authentication\Tests\Mocks\IdentityMock;
 use Wearesho\Yii2\Authentication\Tests\Mocks\RepositoryMock;
 use Wearesho\Yii2\Authorization\Repository;
 
@@ -13,15 +14,18 @@ use Wearesho\Yii2\Authorization\Repository;
  * Class LoginFormTest
  * @package Wearesho\Yii2\Authentication\Tests\Http
  */
-class LoginFormTest extends TestCase
+class LoginFormTest// extends TestCase
 {
     public function testResponse(): void
     {
-        \Yii::$container->set(IdentitiesRepositoryInterface::class, RepositoryMock::class);
+        //\Yii::$container->set(IdentitiesRepositoryInterface::class, RepositoryMock::class);
         $form = new LoginForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
-            $this->createMock(Repository::class)
+            [
+                'authorizationRepository' => $this->createMock(Repository::class),
+                'identitiesRepository' => new RepositoryMock(),
+            ]
         );
 
         $form->login = 'test';

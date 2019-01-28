@@ -13,30 +13,62 @@ use yii\web\IdentityInterface;
  */
 class IdentityPasswordValidatorTest extends TestCase
 {
-    /** @var Authentication\Tests\Mocks\RepositoryMock */
-    protected $repository;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->repository = new Authentication\Tests\Mocks\RepositoryMock();
-    }
-
     /**
      * @expectedException \yii\base\InvalidConfigException
      * @expectedExceptionMessage Login attribute must be specified
      */
     public function testMissingLoginAttribute(): void
     {
-        $validator = new Authentication\Validators\IdentityPasswordValidator($this->repository);
+        $validator = new Authentication\Validators\IdentityPasswordValidator([
+            'identityClass' => Authentication\Tests\Mocks\IdentityMock::class,
+        ]);
         $validator->validateAttribute(new base\Model(), 'password');
     }
 
-    public function testInvalidResult(): void
+    public function testInvalidLogin(): void
     {
-        $this->repository->shouldFail = true;
-        $validator = new Authentication\Validators\IdentityPasswordValidator($this->repository, [
+        $validator = new Authentication\Validators\IdentityPasswordValidator([
             'loginAttribute' => 'login',
+            'identityClass' => new class
+            {
+                public static function findIdentityByLogin(string $login): ?IdentityInterface
+                {
+                    return null;
+                }
+            },
+        ]);
+
+        $model = new Authentication\Tests\Mocks\FormMock([
+            'login' => 'test',
+            'password' => 'test',
+        ]);
+        $validator->validateAttribute($model, 'password');
+        $this->assertCount(1, $model->errors);
+        $this->assertArraySubset(['login' => ['Login is invalid.',],], $model->errors);
+    }
+
+    public function testInvalidPassword(): void
+    {
+        $mock = $this->createConfiguredMock(Authentication\Tests\Mocks\IdentityMock::class, [
+            'validatePassword' => false,
+        ]);
+
+        $validator = new Authentication\Validators\IdentityPasswordValidator([
+            'loginAttribute' => 'login',
+            'identityClass' => new class($mock)
+            {
+                protected static $identity;
+
+                public function __construct($identity)
+                {
+                    static::$identity = $identity;
+                }
+
+                public static function findIdentityByLogin(string $login): ?IdentityInterface
+                {
+                    return static::$identity;
+                }
+            },
         ]);
 
         $model = new Authentication\Tests\Mocks\FormMock([

@@ -5,8 +5,7 @@ namespace Wearesho\Yii2\Authentication\Http;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii\Http;
-use yii\db;
-use yii\web;
+use yii\di;
 
 /**
  * Class LoginForm
@@ -14,24 +13,29 @@ use yii\web;
  */
 class LoginForm extends Http\Panel
 {
+    /** @var string */
     public $login;
 
+    /** @var string */
     public $password;
 
-    /** @var web\IdentityInterface */
+    /** @var Authentication\IdentityInterface */
     public $identity;
 
-    /** @var Authorization\Repository */
-    protected $authorizationRepository;
+    /** @var string */
+    public $identityClass = Authentication\IdentityInterface::class;
 
-    public function __construct(
-        Http\Request $request,
-        Http\Response $response,
-        Authorization\Repository $repository,
-        array $config = []
-    ) {
-        parent::__construct($request, $response, $config);
-        $this->authorizationRepository = $repository;
+    /** @var array|string|Authorization\Repository */
+    public $authorizationRepository = Authorization\Repository::class;
+
+    public function init(): void
+    {
+        parent::init();
+
+        $this->authorizationRepository = di\Instance::ensure(
+            $this->authorizationRepository,
+            Authorization\Repository::class
+        );
     }
 
     public function rules(): array
@@ -50,6 +54,7 @@ class LoginForm extends Http\Panel
                 Authentication\Validators\IdentityPasswordValidator::class,
                 'targetAttribute' => 'identity',
                 'loginAttribute' => 'login',
+                'identityClass' => $this->identityClass,
             ],
         ];
     }

@@ -1,7 +1,7 @@
 {
     "name": "wearesho-team/yii2-authentication",
     "type": "library",
-    "license": "Proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Beton",
@@ -13,11 +13,11 @@
         "php": ">=7.2",
         "yiisoft/yii2": "2.0.15.1",
         "wearesho-team/yii2-authorization": "^1.0",
-        "wearesho-team/yii-http": "^1.14",
-        "squizlabs/php_codesniffer": "^3.4"
+        "wearesho-team/yii-http": "^1.14"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "squizlabs/php_codesniffer": "^3.4"
     },
     "autoload": {
         "psr-4": {

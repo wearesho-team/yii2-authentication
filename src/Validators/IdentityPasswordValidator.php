@@ -3,9 +3,8 @@
 namespace Wearesho\Yii2\Authentication\Validators;
 
 use Wearesho\Yii2\Authentication;
-use yii\base\InvalidConfigException;
+use yii\base;
 use yii\validators\Validator;
-use yii\web\IdentityInterface;
 
 /**
  * Class IdentityPasswordValidator
@@ -19,20 +18,8 @@ class IdentityPasswordValidator extends Validator
     /** @var  string */
     public $loginAttribute;
 
-    /** @var Authentication\Interfaces\IdentitiesRepositoryInterface */
-    protected $repository;
-
-    /**
-     * IdentityPasswordValidator constructor.
-     * @param Authentication\Interfaces\IdentitiesRepositoryInterface $repository
-     * @param array $config
-     */
-    public function __construct(Authentication\Interfaces\IdentitiesRepositoryInterface $repository, array $config = [])
-    {
-        parent::__construct($config);
-
-        $this->repository = $repository;
-    }
+    /** @var Authentication\IdentityInterface */
+    public $identityClass;
 
     public function init(): void
     {
@@ -46,18 +33,23 @@ class IdentityPasswordValidator extends Validator
     /**
      * @param \yii\base\Model $model
      * @param string $attribute
-     * @throws InvalidConfigException
+     * @throws base\InvalidConfigException
      */
     public function validateAttribute($model, $attribute): void
     {
         if (empty($model->{$this->loginAttribute})) {
-            throw new InvalidConfigException("Login attribute must be specified.");
+            throw new base\InvalidConfigException("Login attribute must be specified.");
         }
 
-        $identity = $this->repository->pull($model->{$this->loginAttribute}, $model->{$attribute});
-        if (!$identity instanceof IdentityInterface) {
-            $this->addError($model, $attribute, $this->message);
+        $identity = $this->identityClass::findIdentityByLogin($model->{$this->loginAttribute});
+        if (!$identity instanceof Authentication\IdentityInterface) {
+            // todo: fix message to custom
+            $this->addError($model, $this->loginAttribute, $this->message);
             return;
+        }
+
+        if (!$identity->validatePassword($model->{$attribute})) {
+            $this->addError($model, $attribute, $this->message);
         }
 
         if (!empty($this->targetAttribute)) {
