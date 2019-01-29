@@ -15,6 +15,9 @@ class Controller extends Authentication\Controller
     /** @var string|array|Token\Repository */
     public $tokenRepository;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function behaviors(): array
     {
         return array_merge_recursive(parent::behaviors(), [
@@ -33,6 +36,9 @@ class Controller extends Authentication\Controller
         ]);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function actions(): array
     {
         return array_merge_recursive(parent::actions(), [

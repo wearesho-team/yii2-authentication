@@ -6,14 +6,15 @@ use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii2\Token;
-use yii\di;
 use yii\base;
+use yii\di;
+use yii\web;
 
 /**
  * Class ConfirmForm
  * @package Wearesho\Yii2\Authentication\TwoFactor
  */
-class ConfirmForm extends Http\Form
+class ConfirmForm extends Http\Panel
 {
     /** @var string */
     public $hash;
@@ -88,7 +89,7 @@ class ConfirmForm extends Http\Form
 
         $identity = call_user_func([$this->identityClass, 'findIdentityByLogin'], $token->getOwner());
         if (!$identity instanceof Authentication\IdentityInterface) {
-            // todo: throw exception
+            throw new web\HttpException(409, 'Hash and token were correct, but user not found');
         }
 
         $id = $identity->getId();
