@@ -12,7 +12,7 @@ use yii\di;
  * Class LoginForm
  * @package Wearesho\Yii2\Authentication\TwoFactor
  */
-class LoginForm extends Http\Form
+class LoginForm extends Http\Panel
 {
     public const EVENT_AFTER_CREATE = 'afterCreate';
 
@@ -28,6 +28,9 @@ class LoginForm extends Http\Form
     /** @var string|array|Token\Repository */
     public $repository = Token\Repository::class;
 
+    /** @var string|array|TokenGeneratorInterface */
+    public $tokenGenerator = TokenGeneratorInterface::class;
+
     /**
      * @throws base\InvalidConfigException
      */
@@ -35,6 +38,7 @@ class LoginForm extends Http\Form
     {
         parent::init();
         $this->repository = di\Instance::ensure($this->repository, Token\Repository::class);
+        $this->tokenGenerator = di\Instance::ensure($this->tokenGenerator, TokenGeneratorInterface::class);
     }
 
     public function rules(): array
@@ -79,8 +83,7 @@ class LoginForm extends Http\Form
             );
         }
 
-        // Todo: implement token generation
-        $value = 111111;
+        $value = $this->tokenGenerator->generate();
 
         $token = new Token\Entity(
             'login',
