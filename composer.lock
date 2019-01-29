@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b91f18342e86291a48930a1267a89834",
+    "content-hash": "5a8066ae2e04dde7ca19429f02b8943d",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -898,12 +898,6 @@
                 "url": "https://github.com/wearesho-team/yii2-authorization.git",
                 "reference": "146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wearesho-team/yii2-authorization/zipball/146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac",
-                "reference": "146e9fb9e58ac7e58c9d045da2df48ea7d3a69ac",
-                "shasum": ""
-            },
             "require": {
                 "horat1us/yii2-environment-config": "^1.0",
                 "nesbot/carbon": "^1.33",
@@ -922,7 +916,25 @@
                     "Wearesho\\Yii2\\Authorization\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Wearesho\\Yii2\\Authorization\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "lint": [
+                    "./vendor/bin/phpcs --standard=PSR2 ./src ./tests"
+                ],
+                "phpcbf": [
+                    "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests"
+                ],
+                "test": [
+                    "./vendor/bin/phpunit"
+                ],
+                "cover": [
+                    "./vendor/bin/phpunit --coverage-clover=coverage.xml"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -933,7 +945,51 @@
                 }
             ],
             "description": "Redis Authorization Tokens for Yii2",
-            "time": "2019-01-22T21:32:37+00:00"
+            "time": "2019-01-22T20:19:52+00:00"
+        },
+        {
+            "name": "wearesho-team/yii2-tokens",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wearesho-team/yii2-tokens.git",
+                "reference": "09e16fef669b9a87e80bebd73cd41c82e0d2e541"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wearesho-team/yii2-tokens/zipball/09e16fef669b9a87e80bebd73cd41c82e0d2e541",
+                "reference": "09e16fef669b9a87e80bebd73cd41c82e0d2e541",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^1.33",
+                "php": "^7.1",
+                "ramsey/uuid": "^3.6",
+                "yiisoft/yii2": "^2.0.15",
+                "yiisoft/yii2-redis": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wearesho\\Yii2\\Token\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Letnikow",
+                    "email": "reclamme@gmail.com"
+                }
+            ],
+            "description": "Storing tokens (authorization, registration) in redis database.",
+            "time": "2019-01-19T15:14:10+00:00"
         },
         {
             "name": "yiisoft/yii2",
