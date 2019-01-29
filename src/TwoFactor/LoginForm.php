@@ -14,6 +14,8 @@ use yii\di;
  */
 class LoginForm extends Http\Form
 {
+    public const EVENT_AFTER_CREATE = 'afterCreate';
+
     /** @var string */
     public $login;
 
@@ -77,15 +79,19 @@ class LoginForm extends Http\Form
             );
         }
 
-        // Todo: move type to constant, implement token generator
+        // Todo: implement token generation
+        $value = 111111;
+
         $token = new Token\Entity(
             'login',
             $this->login,
-            111111,
+            $value,
             (new \DateTime())->add(new \DateInterval('PT30M'))
         );
 
         $hash = $this->repository->put($token);
+
+        $this->trigger(static::EVENT_AFTER_CREATE, new Events\Create($value));
 
         $this->response->statusCode = 201;
 
