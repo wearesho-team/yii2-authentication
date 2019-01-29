@@ -27,6 +27,7 @@ class RefreshFormTest extends TestCase
             ]
         );
         $form->refresh = 'token';
+        $form->detachBehaviors();
 
         $repository->expects($this->once())
             ->method('delete')

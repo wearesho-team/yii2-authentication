@@ -16,6 +16,21 @@ class LoginFormTest extends TestCase
 {
     /**
      * @expectedException \yii\base\InvalidConfigException
+     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Authentication\TwoFactor\ConfigInterface is
+     */
+    public function testInvalidConfigDependency(): void
+    {
+        new Authentication\TwoFactor\LoginForm(
+            $this->createMock(Http\Request::class),
+            $this->createMock(Http\Response::class),
+            [
+                'config' => new \stdClass,
+            ]
+        );
+    }
+
+    /**
+     * @expectedException \yii\base\InvalidConfigException
      * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.
      */
     public function testInvalidRepositoryDependency(): void
@@ -24,6 +39,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => new \stdClass,
             ]
         );
@@ -39,6 +55,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
                 'tokenGenerator' => new \stdClass(),
             ]
@@ -51,6 +68,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
                 'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
             ]
@@ -64,6 +82,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
                 'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
             ]
@@ -77,6 +96,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
                 'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
             ]
@@ -104,6 +124,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
                 'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
             ]
@@ -136,6 +157,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
+                'config' => $this->createMock(Authentication\TwoFactor\EnvironmentConfig::class),
                 'repository' => $repository = $this->createMock(Token\Repository::class),
                 'tokenGenerator' => $tokenGenerator = $this->createMock(Mock\TokenGenerator::class),
             ]
@@ -164,7 +186,7 @@ class LoginFormTest extends TestCase
         $form->on(
             Authentication\TwoFactor\LoginForm::EVENT_AFTER_CREATE,
             function (Authentication\TwoFactor\Events\Create $event) use (&$token) {
-                $token = $event->getValue();
+                $token = $event->getToken()->getValue();
             }
         );
 

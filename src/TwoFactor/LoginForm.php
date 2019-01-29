@@ -31,12 +31,16 @@ class LoginForm extends Http\Panel
     /** @var string|array|TokenGeneratorInterface */
     public $tokenGenerator = TokenGeneratorInterface::class;
 
+    /** @var string|array|ConfigInterface */
+    public $config = ConfigInterface::class;
+
     /**
      * @throws base\InvalidConfigException
      */
     public function init(): void
     {
         parent::init();
+        $this->config = di\Instance::ensure($this->config, ConfigInterface::class);
         $this->repository = di\Instance::ensure($this->repository, Token\Repository::class);
         $this->tokenGenerator = di\Instance::ensure($this->tokenGenerator, TokenGeneratorInterface::class);
     }
@@ -84,17 +88,12 @@ class LoginForm extends Http\Panel
         }
 
         $value = $this->tokenGenerator->generate();
+        $expireAt = (new \DateTime())->add(new \DateInterval("PT{$this->config->getTokenLifetime()}S"));
 
-        $token = new Token\Entity(
-            'login',
-            $this->login,
-            $value,
-            (new \DateTime())->add(new \DateInterval('PT30M'))
-        );
-
+        $token = new Token\Entity('login', $this->login, $value, $expireAt);
         $hash = $this->repository->put($token);
 
-        $this->trigger(static::EVENT_AFTER_CREATE, new Events\Create($value));
+        $this->trigger(static::EVENT_AFTER_CREATE, new Events\Create($token));
 
         $this->response->statusCode = 201;
 

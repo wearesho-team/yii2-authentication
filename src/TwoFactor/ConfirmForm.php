@@ -20,7 +20,10 @@ class ConfirmForm extends Http\Panel
     public $hash;
 
     /** @var string */
-    public $value;
+    public $token;
+
+    /** @var string */
+    public $login;
 
     /** @var string */
     public $identityClass = Authentication\IdentityInterface::class;
@@ -30,6 +33,20 @@ class ConfirmForm extends Http\Panel
 
     /** @var string|array|Authorization\Repository */
     public $authorizationRepository = Authorization\Repository::class;
+
+    public function behaviors(): array
+    {
+        return [
+            'tokenValidation' => [
+                'class' => Token\ValidationBehavior::class,
+                'repository' => $this->tokenRepository,
+                'hash' => 'hash',
+                'token' => 'token',
+                'tokenOwner' => 'login',
+                'type' => 'login',
+            ],
+        ];
+    }
 
     /**
      * @throws base\InvalidConfigException
@@ -49,11 +66,11 @@ class ConfirmForm extends Http\Panel
     {
         return [
             [
-                ['hash', 'value',],
+                ['hash', 'token', 'login',],
                 'required',
             ],
             [
-                ['hash', 'value',],
+                ['hash', 'token', 'login',],
                 'string',
             ],
         ];
@@ -64,39 +81,16 @@ class ConfirmForm extends Http\Panel
      */
     protected function generateResponse(): array
     {
-        $token = $this->tokenRepository->get($this->hash);
-        if (empty($token)) {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            Http\Exceptions\HttpValidationException::addAndThrow(
-                'hash',
-                \Yii::t('yii', '{attribute} is invalid.', [
-                    'attribute' => 'hash',
-                ]),
-                $this
-            );
-        }
-
-        if ($token->getValue() !== $this->value) {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            Http\Exceptions\HttpValidationException::addAndThrow(
-                'value',
-                \Yii::t('yii', '{attribute} is invalid.', [
-                    'attribute' => 'value',
-                ]),
-                $this
-            );
-        }
-
-        $identity = call_user_func([$this->identityClass, 'findIdentityByLogin'], $token->getOwner());
+        $identity = call_user_func([$this->identityClass, 'findIdentityByLogin'], $this->login);
         if (!$identity instanceof Authentication\IdentityInterface) {
             throw new web\HttpException(409, 'Hash and token were correct, but user not found');
         }
 
         $id = $identity->getId();
-        $accessToken = $this->authorizationRepository->create($id);
+        $token = $this->authorizationRepository->create($id);
 
         $this->response->statusCode = 202;
 
-        return Authentication\View::render($id, $accessToken);
+        return Authentication\View::render($id, $token);
     }
 }

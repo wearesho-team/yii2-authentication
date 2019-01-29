@@ -5,7 +5,6 @@ namespace Wearesho\Yii2\Authentication\Tests\TwoFactor;
 use PHPUnit\Framework\TestCase;
 use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication;
-use Wearesho\Yii2\Authentication\Tests\Mock;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii2\Token;
 use yii\web;
@@ -70,7 +69,20 @@ class ConfirmFormTest extends TestCase
                 'authorizationRepository' => $this->createMock(Authorization\Repository::class),
             ]
         );
-        $this->assertFalse($form->validate(['value']));
+        $this->assertFalse($form->validate(['token']));
+    }
+
+    public function testMissingLogin(): void
+    {
+        $form = new Authentication\TwoFactor\ConfirmForm(
+            $this->createMock(Http\Request::class),
+            $this->createMock(Http\Response::class),
+            [
+                'tokenRepository' => $this->createMock(Token\Repository::class),
+                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+            ]
+        );
+        $this->assertFalse($form->validate(['login']));
     }
 
     public function testInvalidHash(): void
@@ -85,7 +97,8 @@ class ConfirmFormTest extends TestCase
         );
 
         $form->hash = 'test';
-        $form->value = 'test';
+        $form->token = 'test';
+        $form->login = 'test';
 
         $tokenRepository->expects($this->once())
             ->method('get')
@@ -115,20 +128,21 @@ class ConfirmFormTest extends TestCase
         );
 
         $form->hash = 'test';
-        $form->value = 'test';
+        $form->token = 'test';
+        $form->login = 'test';
 
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('test', 'test', 'invalid', new \DateTime())
+                new Token\Entity('login', 'test', 'invalid', new \DateTime())
             );
 
         try {
             $form->getResponse();
         } catch (Http\Exceptions\HttpValidationException $exception) {
             $this->assertEquals(
-                'value is invalid.',
-                $form->getFirstError('value')
+                'token is invalid.',
+                $form->getFirstError('token')
             );
         }
 
@@ -141,23 +155,24 @@ class ConfirmFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
-                'identityClass' => Mock\Identity::class,
+                'identityClass' => Authentication\Tests\Mock\Identity::class,
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),
                 'authorizationRepository' => $this->createMock(Authorization\Repository::class),
             ]
         );
 
         $form->hash = 'test';
-        $form->value = 'test';
+        $form->token = 'test';
+        $form->login = 'test';
 
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('test', 'test', $form->value, new \DateTime())
+                new Token\Entity('login', 'test', $form->token, new \DateTime())
             );
 
-        $form->identityClass = Mock\Identity::class;
-        Mock\Identity::$willFind = null;
+        $form->identityClass = Authentication\Tests\Mock\Identity::class;
+        Authentication\Tests\Mock\Identity::$willFind = null;
 
         try {
             $form->getResponse();
@@ -175,23 +190,26 @@ class ConfirmFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
-                'identityClass' => Mock\Identity::class,
+                'identityClass' => Authentication\Tests\Mock\Identity::class,
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),
                 'authorizationRepository' => $authRepository = $this->createMock(Authorization\Repository::class),
             ]
         );
 
         $form->hash = 'test';
-        $form->value = 'test';
+        $form->token = 'test';
+        $form->login = 'test';
 
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('test', 'test', $form->value, new \DateTime())
+                new Token\Entity('login', 'test', $form->token, new \DateTime())
             );
 
-        $form->identityClass = Mock\Identity::class;
-        Mock\Identity::$willFind = $identity = $this->createMock(Mock\Identity::class);
+        $form->identityClass = Authentication\Tests\Mock\Identity::class;
+        Authentication\Tests\Mock\Identity::$willFind = $identity = $this->createMock(
+            Authentication\Tests\Mock\Identity::class
+        );
 
         $identity->expects($this->once())
             ->method('getId')

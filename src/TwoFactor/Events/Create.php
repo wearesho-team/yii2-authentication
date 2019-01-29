@@ -2,6 +2,7 @@
 
 namespace Wearesho\Yii2\Authentication\TwoFactor\Events;
 
+use Wearesho\Yii2\Token;
 use yii\base;
 
 /**
@@ -10,17 +11,17 @@ use yii\base;
  */
 class Create extends base\Event
 {
-    /** @var string */
-    protected $value;
+    /** @var Token\Entity */
+    protected $token;
 
-    public function __construct(string $value, array $config = [])
+    public function __construct(Token\Entity $token, array $config = [])
     {
         parent::__construct($config);
-        $this->value = $value;
+        $this->token = $token;
     }
 
-    public function getValue(): string
+    public function getToken(): Token\Entity
     {
-        return $this->value;
+        return $this->token;
     }
 }
