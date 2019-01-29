@@ -32,6 +32,16 @@ class LogoutForm extends Http\Panel
         $this->repository = di\Instance::ensure($this->repository, Authorization\Repository::class);
     }
 
+    public function behaviors(): array
+    {
+        return [
+            'getParams' => [
+                'class' => Http\Behaviors\GetParamsBehavior::class,
+                'attributes' => ['refresh',],
+            ],
+        ];
+    }
+
     public function rules(): array
     {
         return [

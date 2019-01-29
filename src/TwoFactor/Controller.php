@@ -15,6 +15,9 @@ class Controller extends Authentication\Controller
     /** @var string|array|Token\Repository */
     public $tokenRepository;
 
+    /** @var string|array|TokenGeneratorInterface */
+    public $tokenGenerator;
+
     /**
      * @codeCoverageIgnore
      */
@@ -47,6 +50,7 @@ class Controller extends Authentication\Controller
                     'class' => LoginForm::class,
                     'identityClass' => $this->identityClass,
                     'repository' => $this->tokenRepository,
+                    'tokenGenerator' => $this->tokenGenerator,
                 ],
                 'patch' => [
                     'class' => ConfirmForm::class,
