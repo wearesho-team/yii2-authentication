@@ -27,7 +27,7 @@ class Controller extends Http\Controller
      */
     public function behaviors(): array
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => filters\AccessControl::class,
                 'rules' => [
@@ -47,7 +47,7 @@ class Controller extends Http\Controller
                     ],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
