@@ -57,7 +57,7 @@ class LoginForm extends Http\Panel
      */
     protected function generateResponse(): array
     {
-        $identity = call_user_func([$this->identityClass, 'findIdentityByLogin'], $this->login);
+        $identity = \call_user_func([$this->identityClass, 'findIdentityByLogin'], $this->login);
         if (!$identity instanceof IdentityInterface) {
             /** @noinspection PhpUnhandledExceptionInspection */
             Http\Exceptions\HttpValidationException::addAndThrow(

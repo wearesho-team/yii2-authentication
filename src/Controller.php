@@ -72,6 +72,6 @@ class Controller extends Http\Controller
                 ],
             ],
         ];
-        return array_merge_recursive(parent::actions(), $actions);
+        return \array_merge_recursive(parent::actions(), $actions);
     }
 }

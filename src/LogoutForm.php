@@ -46,7 +46,7 @@ class LogoutForm extends Http\Panel
     final protected function generateResponse(): array
     {
         $userId = $this->repository->delete($this->refresh);
-        if (is_null($userId)) {
+        if (\is_null($userId)) {
             /** @noinspection PhpUnhandledExceptionInspection */
             Http\Exceptions\HttpValidationException::addAndThrow(
                 'refresh',
