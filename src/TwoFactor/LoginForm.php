@@ -5,6 +5,7 @@ namespace Wearesho\Yii2\Authentication\TwoFactor;
 use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Token;
+use Wearesho\Token\Generator;
 use yii\base;
 use yii\di;
 
@@ -28,8 +29,8 @@ class LoginForm extends Http\Panel
     /** @var string|array|Token\Repository */
     public $repository = Token\Repository::class;
 
-    /** @var string|array|TokenGeneratorInterface */
-    public $tokenGenerator = TokenGeneratorInterface::class;
+    /** @var string|array|Generator */
+    public $tokenGenerator = Generator::class;
 
     /** @var string|array|ConfigInterface */
     public $config = ConfigInterface::class;
@@ -42,7 +43,7 @@ class LoginForm extends Http\Panel
         parent::init();
         $this->config = di\Instance::ensure($this->config, ConfigInterface::class);
         $this->repository = di\Instance::ensure($this->repository, Token\Repository::class);
-        $this->tokenGenerator = di\Instance::ensure($this->tokenGenerator, TokenGeneratorInterface::class);
+        $this->tokenGenerator = di\Instance::ensure($this->tokenGenerator, Generator::class);
     }
 
     public function rules(): array

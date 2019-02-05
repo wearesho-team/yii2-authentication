@@ -1,7 +1,7 @@
 # Two factor authentication
 
 You can use [Controller](./src/TwoFactor/Controller.php) that provides two factor authentication.
-You need to pass Token\Repository and TokenGeneratorInterface in addition to base controller settings
+You need to pass Token\Repository and Wearesho\Token\Generator in addition to base controller settings
 
 ## Configuration
 
@@ -11,6 +11,7 @@ You need to pass Token\Repository and TokenGeneratorInterface in addition to bas
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii2\Token;
+use Wearesho\Token\Generator;
 
 return [
     'controllerMap' => [
@@ -19,7 +20,7 @@ return [
             'identityClass' => YourIdentityClass::class,
             'repository' => Authorization\Repository::class,
             'tokenRepository' => Token\Repository::class,
-            'tokenGenerator' => YourImplementedTokenGenerator::class,
+            'tokenGenerator' => new Generator\Numeric($length = 6), // Your Generator definition 
         ],
     ],
 ];

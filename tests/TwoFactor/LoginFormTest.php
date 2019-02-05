@@ -3,6 +3,7 @@
 namespace Wearesho\Yii2\Authentication\Tests\TwoFactor;
 
 use PHPUnit\Framework\TestCase;
+use Wearesho\Token\Generator;
 use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authentication\Tests\Mock;
@@ -47,7 +48,7 @@ class LoginFormTest extends TestCase
 
     /**
      * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Authentication\TwoFactor\TokenGenerator
+     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Token\Generator
      */
     public function testInvalidTokenGeneratorDependency(): void
     {
@@ -70,7 +71,7 @@ class LoginFormTest extends TestCase
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
-                'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
+                'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
         $this->assertFalse($form->validate(['login']));
@@ -84,7 +85,7 @@ class LoginFormTest extends TestCase
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
-                'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
+                'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
         $this->assertFalse($form->validate(['password']));
@@ -98,7 +99,7 @@ class LoginFormTest extends TestCase
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
-                'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
+                'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
         $form->login = 'test';
@@ -126,7 +127,7 @@ class LoginFormTest extends TestCase
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => $this->createMock(Token\Repository::class),
-                'tokenGenerator' => $this->createMock(Mock\TokenGenerator::class),
+                'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
         $form->login = 'test';
@@ -159,7 +160,7 @@ class LoginFormTest extends TestCase
             [
                 'config' => $this->createMock(Authentication\TwoFactor\EnvironmentConfig::class),
                 'repository' => $repository = $this->createMock(Token\Repository::class),
-                'tokenGenerator' => $tokenGenerator = $this->createMock(Mock\TokenGenerator::class),
+                'tokenGenerator' => new Generator\Char(6, ['a']),
             ]
         );
         $form->login = 'test';
@@ -177,10 +178,6 @@ class LoginFormTest extends TestCase
             ->method('put')
             ->willReturn($hash = 'testHash');
 
-        $tokenGenerator->expects($this->once())
-            ->method('generate')
-            ->willReturn($expectedToken = '123456');
-
         $token = null;
 
         $form->on(
@@ -192,6 +189,6 @@ class LoginFormTest extends TestCase
 
         $response = $form->getResponse();
         $this->assertEquals(['hash' => $hash,], $response->data);
-        $this->assertEquals($expectedToken, $token);
+        $this->assertEquals('aaaaaa', $token);
     }
 }
