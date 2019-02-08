@@ -4,6 +4,7 @@ namespace Wearesho\Yii2\Authentication\TwoFactor;
 
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Token;
+use Wearesho\Token\Generator;
 use yii\filters;
 
 /**
@@ -13,26 +14,40 @@ use yii\filters;
 class Controller extends Authentication\Controller
 {
     /** @var string|array|Token\Repository */
-    public $tokenRepository;
+    public $tokenRepository = Token\Repository::class;
 
-    /** @var string|array|TokenGeneratorInterface */
-    public $tokenGenerator;
+    /** @var string|array|Generator */
+    public $tokenGenerator = Generator::class;
 
     /**
      * @codeCoverageIgnore
      */
     public function behaviors(): array
     {
-        return array_merge_recursive(parent::behaviors(), [
+        return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => filters\AccessControl::class,
                 'rules' => [
                     [
                         'class' => filters\AccessRule::class,
                         'actions' => ['index',],
+                        'verbs' => ['POST'],
+                        'allow' => true,
+                        'roles' => ['?',],
+                    ],
+                    [
+                        'class' => filters\AccessRule::class,
+                        'actions' => ['index',],
+                        'verbs' => ['PUT', 'DELETE',],
+                        'allow' => true,
+                        'roles' => ['@',],
+                    ],
+                    [
+                        'class' => filters\AccessRule::class,
+                        'actions' => ['index',],
                         'verbs' => ['PATCH',],
                         'allow' => true,
-                        'permissions' => '?',
+                        'permissions' => ['?'],
                     ],
                 ],
             ],
@@ -44,7 +59,7 @@ class Controller extends Authentication\Controller
      */
     public function actions(): array
     {
-        return array_merge_recursive(parent::actions(), [
+        return [
             'index' => [
                 'post' => [
                     'class' => LoginForm::class,
@@ -58,7 +73,15 @@ class Controller extends Authentication\Controller
                     'authorizationRepository' => $this->repository,
                     'tokenRepository' => $this->tokenRepository,
                 ],
+                'delete' => [
+                    'class' => Authentication\LogoutForm::class,
+                    'repository' => $this->repository,
+                ],
+                'put' => [
+                    'class' => Authentication\RefreshForm::class,
+                    'repository' => $this->repository,
+                ],
             ],
-        ]);
+        ];
     }
 }
