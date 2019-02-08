@@ -61,6 +61,8 @@ class LogoutFormTest extends TestCase
             ->with('token')
             ->willReturn(null);
 
+        $form->detachBehaviors();
+
         $form->refresh = 'token';
         try {
             $form->getResponse();
@@ -85,6 +87,7 @@ class LogoutFormTest extends TestCase
             ]
         );
         $form->refresh = 'token';
+        $form->detachBehaviors();
 
         $repository->expects($this->once())
             ->method('delete')
