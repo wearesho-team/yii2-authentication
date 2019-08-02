@@ -60,17 +60,14 @@ class Panel extends Http\Panel
         foreach ($roles as $role) {
             $roles = array_merge($roles, $this->authManager->getChildRoles($role->name));
         }
-        foreach ($roles as &$role) {
-            $role = $role->name;
-        }
 
-        return array_unique($roles);
+        return array_unique(array_keys($roles));
     }
 
     protected function getPermissions(int $id): array
     {
-        return array_map(function (rbac\Permission $permission): string {
+        return array_keys(array_map(function (rbac\Permission $permission): string {
             return $permission->name;
-        }, $this->authManager->getPermissionsByUser($id));
+        }, $this->authManager->getPermissionsByUser($id)));
     }
 }
