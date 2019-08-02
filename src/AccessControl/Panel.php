@@ -58,7 +58,7 @@ class Panel extends Http\Panel
         $roles = $this->authManager->getRolesByUser($id);
 
         foreach ($roles as $role) {
-            $roles = array_merge($roles, $this->authManager->getChildRoles($role));
+            $roles = array_merge($roles, $this->authManager->getChildRoles($role->name));
         }
         foreach ($roles as &$role) {
             $role = $role->name;

@@ -19,11 +19,13 @@ class Controller extends Http\Controller
             'access' => [
                 'class' => filters\AccessControl::class,
                 'rules' => [
-                    'class' => filters\AccessRule::class,
-                    'roles' => [Http\Behaviors\AccessControl::ROLE_DEFAULT,],
-                    'actions' => ['index',],
-                    'verbs' => ['GET', 'POST',],
-                    'allow' => true,
+                    [
+                        'class' => filters\AccessRule::class,
+                        'roles' => [Http\Behaviors\AccessControl::ROLE_DEFAULT,],
+                        'actions' => ['index',],
+                        'verbs' => ['GET', 'POST',],
+                        'allow' => true,
+                    ],
                 ],
             ],
         ];

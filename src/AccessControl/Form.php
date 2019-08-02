@@ -15,23 +15,14 @@ use yii\di;
  */
 class Form extends Http\Panel
 {
-    /** @var string|array|web\User reference */
-    public $user = 'user';
-
     /** @var string */
     public $permission;
 
     /** @var array|null */
     public $params;
 
-    public function rules(): array
-    {
-        return [
-            [['permission',], 'required',],
-            [['permission',], 'string',],
-            [['params',], 'each', 'rule' => ['safe',],],
-        ];
-    }
+    /** @var string|array|web\User reference */
+    public $user = 'user';
 
     /**
      * @throws base\InvalidConfigException
@@ -40,6 +31,20 @@ class Form extends Http\Panel
     {
         parent::init();
         $this->user = di\Instance::ensure($this->user, web\User::class);
+    }
+
+    public function formName(): string
+    {
+        return 'AccessControl';
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['permission',], 'required',],
+            [['permission',], 'string',],
+            [['params',], 'each', 'rule' => ['safe',],],
+        ];
     }
 
     /**
