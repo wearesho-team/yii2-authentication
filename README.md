@@ -36,7 +36,6 @@ return [
 ];
 ```
 
-
 ### HTTP Routes
 
 There is only one action declared in controllers: index. It can be called using different HTTP methods.
