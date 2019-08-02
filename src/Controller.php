@@ -54,6 +54,13 @@ class Controller extends Http\Controller
                         'allow' => true,
                         'roles' => ['@',],
                     ],
+                    [
+                        'class' => filters\AccessRule::class,
+                        'actions' => ['access-control',],
+                        'verbs' => ['GET', 'POST',],
+                        'allow' => true,
+                        'roles' => ['@',],
+                    ],
                 ],
             ],
         ]);
