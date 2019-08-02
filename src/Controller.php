@@ -19,15 +19,6 @@ class Controller extends Http\Controller
      */
     public $identityClass;
 
-    public $accessControl = [
-        'get' => [
-            'class' => AccessControl\Panel::class,
-        ],
-        'post' => [
-            'class' => AccessControl\Form::class,
-        ],
-    ];
-
     /** @var string|array|Authorization\Repository */
     public $repository = Authorization\Repository::class;
 
@@ -87,7 +78,6 @@ class Controller extends Http\Controller
                     'repository' => $this->repository,
                 ],
             ],
-            'access-control' => $this->accessControl,
         ];
         return \array_merge_recursive(parent::actions(), $actions);
     }
