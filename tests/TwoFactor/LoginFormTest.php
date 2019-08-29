@@ -158,7 +158,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
-                'config' => $this->createMock(Authentication\TwoFactor\EnvironmentConfig::class),
+                'config' => $config = $this->createMock(Authentication\TwoFactor\EnvironmentConfig::class),
                 'repository' => $repository = $this->createMock(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(6, ['a']),
             ]
@@ -173,7 +173,9 @@ class LoginFormTest extends TestCase
             ->method('validatePassword')
             ->with('test')
             ->willReturn(true);
-
+        $config->expects($this->once())
+            ->method('getTokenLifetime')
+            ->willReturn($ttl = 100);
         $repository->expects($this->once())
             ->method('put')
             ->willReturn($hash = 'testHash');
@@ -186,9 +188,8 @@ class LoginFormTest extends TestCase
                 $token = $event->getToken()->getValue();
             }
         );
-
         $response = $form->getResponse();
-        $this->assertEquals(['hash' => $hash,], $response->data);
+        $this->assertEquals(compact('hash', 'ttl'), $response->data);
         $this->assertEquals('aaaaaa', $token);
     }
 }

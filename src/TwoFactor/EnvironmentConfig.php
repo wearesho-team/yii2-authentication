@@ -17,6 +17,6 @@ class EnvironmentConfig extends Environment\Config implements ConfigInterface
 
     public function getTokenLifetime(): int
     {
-        return $this->getEnv('TOKEN_LIFETIME');
+        return $this->getEnv('TOKEN_LIFETIME', ConfigInterface::DEFAULT_TOKEN_TTL);
     }
 }

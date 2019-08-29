@@ -13,20 +13,20 @@ use Wearesho\Yii2\Token;
 class TokenEntity extends Token\Entity
 {
     public function __construct(
-        string $ip,
+        ?string $ip,
         string $login,
         string $value,
         \DateInterval $ttl
     ) {
         parent::__construct(
             'login',
-            static::getOwner($ip, $login),
+            static::generateOwner($ip, $login),
             $value,
             (new \DateTime)->add($ttl)
         );
     }
 
-    public static function getOwner(string $ip, string $login): string
+    public static function generateOwner(?string $ip, string $login): string
     {
         return hash('sha256', $ip . hash('sha256', $login));
     }

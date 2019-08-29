@@ -64,7 +64,7 @@ class ConfirmForm extends Http\Panel
 
     public function getTokenOwner(): string
     {
-        return TokenEntity::getOwner($this->request->userIP, $this->login);
+        return TokenEntity::generateOwner($this->request->userIP, $this->login);
     }
 
     public function rules(): array

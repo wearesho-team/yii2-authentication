@@ -134,7 +134,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', 'invalid', new \DateTime())
+                new Authentication\TwoFactor\TokenEntity(
+                    null,
+                    $form->login,
+                    str_repeat($form->token, 2),
+                    \DateInterval::createFromDateString('5 seconds')
+                )
             );
 
         try {
@@ -168,7 +173,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', $form->token, new \DateTime())
+                new Authentication\TwoFactor\TokenEntity(
+                    null,
+                    $form->login,
+                    $form->token,
+                    \DateInterval::createFromDateString('10 seconds')
+                )
             );
 
         $form->identityClass = Authentication\Tests\Mock\Identity::class;
@@ -203,7 +213,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', $form->token, new \DateTime())
+                new Authentication\TwoFactor\TokenEntity(
+                    null,
+                    $form->login,
+                    $form->token,
+                    \DateInterval::createFromDateString('10 seconds')
+                )
             );
 
         $form->identityClass = Authentication\Tests\Mock\Identity::class;
