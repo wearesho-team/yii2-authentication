@@ -12,18 +12,42 @@ use Wearesho\Yii2\Token;
  */
 class TokenEntity extends Token\Entity
 {
+    /** @var string|null */
+    protected $ip;
+
+    /** @var string */
+    protected $login;
+
     public function __construct(
         ?string $ip,
         string $login,
         string $value,
         \DateInterval $ttl
     ) {
+        $this->ip = $ip;
+        $this->login = $login;
+
         parent::__construct(
             'login',
-            static::generateOwner($ip, $login),
+            '',
             $value,
-            (new \DateTime)->add($ttl)
+            date_create()->add($ttl)
         );
+    }
+
+    public function getIp():?string
+    {
+        return $this->ip;
+    }
+
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    public function getOwner(): string
+    {
+        return static::generateOwner($this->ip, $this->login);
     }
 
     public static function generateOwner(?string $ip, string $login): string
