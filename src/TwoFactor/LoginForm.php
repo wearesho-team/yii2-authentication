@@ -89,7 +89,8 @@ class LoginForm extends Http\Panel
         }
 
         $value = $this->tokenGenerator->generate();
-        $expireAt = (new \DateTime())->add(new \DateInterval("PT{$this->config->getTokenLifetime()}S"));
+        $ttl = $this->config->getTokenLifetime();
+        $expireAt = (new \DateTime())->add(new \DateInterval("PT{$ttl}S"));
 
         $token = new Token\Entity('login', $this->login, $value, $expireAt);
         $hash = $this->repository->put($token);
@@ -98,6 +99,11 @@ class LoginForm extends Http\Panel
 
         $this->response->statusCode = 201;
 
-        return ['hash' => $hash,];
+        $response = compact('hash', 'ttl');
+        if (YII_DEBUG) {
+            $response['value'] = $token->getValue();
+        }
+
+        return $response;
     }
 }
