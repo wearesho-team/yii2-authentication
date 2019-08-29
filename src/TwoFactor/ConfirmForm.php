@@ -13,6 +13,7 @@ use yii\web;
 /**
  * Class ConfirmForm
  * @package Wearesho\Yii2\Authentication\TwoFactor
+ * @property-read string $tokenOwner
  */
 class ConfirmForm extends Http\Panel
 {
@@ -42,7 +43,6 @@ class ConfirmForm extends Http\Panel
                 'repository' => $this->tokenRepository,
                 'hash' => 'hash',
                 'token' => 'token',
-                'tokenOwner' => 'login',
                 'type' => 'login',
             ],
         ];
@@ -60,6 +60,11 @@ class ConfirmForm extends Http\Panel
             $this->authorizationRepository,
             Authorization\Repository::class
         );
+    }
+
+    public function getTokenOwner(): string
+    {
+        return TokenEntity::getOwner($this->request->userIP, $this->login);
     }
 
     public function rules(): array

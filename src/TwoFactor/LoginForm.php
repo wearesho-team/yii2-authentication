@@ -90,13 +90,17 @@ class LoginForm extends Http\Panel
 
         $value = $this->tokenGenerator->generate();
         $ttl = $this->config->getTokenLifetime();
-        $expireAt = (new \DateTime())->add(new \DateInterval("PT{$ttl}S"));
+        $ttlInterval = new \DateInterval("PT{$ttl}S");
 
-        $token = new Token\Entity('login', $this->login, $value, $expireAt);
+        $token = new TokenEntity(
+            $this->request->userIP,
+            $this->login,
+            $value,
+            $ttlInterval
+        );
         $hash = $this->repository->put($token);
 
         $this->trigger(static::EVENT_AFTER_CREATE, new Events\Create($token));
-
         $this->response->statusCode = 201;
 
         $response = compact('hash', 'ttl');
