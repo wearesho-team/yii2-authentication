@@ -15,7 +15,9 @@ class LoginFormTest extends TestCase
     public function testInvalidRepositoryDependency(): void
     {
         $this->expectException(base\InvalidConfigException::class);
-        $this->expectExceptionMessage('Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.');
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
+        );
         new Authentication\LoginForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
