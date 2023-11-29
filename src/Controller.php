@@ -34,16 +34,9 @@ class Controller extends Http\Controller
                     [
                         'class' => filters\AccessRule::class,
                         'actions' => ['index',],
-                        'verbs' => ['POST'],
+                        'verbs' => ['POST', 'PUT', 'DELETE',],
                         'allow' => true,
                         'roles' => ['?',],
-                    ],
-                    [
-                        'class' => filters\AccessRule::class,
-                        'actions' => ['index',],
-                        'verbs' => ['PUT', 'DELETE',],
-                        'allow' => true,
-                        'roles' => ['@',],
                     ],
                     [
                         'class' => filters\AccessRule::class,
