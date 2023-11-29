@@ -8,19 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii\Http;
+use yii\base;
 
-/**
- * Class LogoutFormTest
- * @package Wearesho\Yii2\Authentication\Tests
- */
 class LogoutFormTest extends TestCase
 {
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.
-     */
     public function testInvalidRepositoryDependency(): void
     {
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
+        );
         new Authentication\LogoutForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
