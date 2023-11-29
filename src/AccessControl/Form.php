@@ -54,7 +54,7 @@ class Form extends Http\Panel
     protected function generateResponse(): array
     {
         if (!$this->user->can($this->permission, $this->params ?? [])) {
-            throw new web\ForbiddenHttpException;
+            throw new web\ForbiddenHttpException();
         }
         $this->response->statusCode = 204;
         return [];
