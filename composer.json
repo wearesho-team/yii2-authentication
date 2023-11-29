@@ -20,15 +20,27 @@
     "yiisoft/yii2": "^2.0.15.1"
   },
   "require-dev": {
+    "brainmaestro/composer-git-hooks": "^2.6",
     "phpunit/phpunit": "^7.5",
     "squizlabs/php_codesniffer": "^3.4"
   },
-  "scripts": {
-    "lint": "phpcs --standard=PSR2 ./src ./tests",
-    "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
-    "test": "phpunit",
-    "cover": "phpunit --coverage-clover=coverage.xml"
-  },
+    "scripts": {
+        "lint": "phpcs --standard=PSR2 ./src ./tests",
+        "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
+        "cover": "phpunit --coverage-clover=coverage.xml",
+        "test": "phpunit",
+        "post-install-cmd": "cghooks add --ignore-lock",
+        "post-update-cmd": "cghooks update"
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "composer lint",
+                "composer test"
+            ],
+            "post-merge": "composer update --lock"
+        }
+    },
   "autoload": {
     "psr-4": {
       "Wearesho\\Yii2\\Authentication\\": "src/"
