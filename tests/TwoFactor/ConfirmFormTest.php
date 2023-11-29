@@ -8,6 +8,7 @@ use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authorization;
 use Wearesho\Yii2\Token;
 use yii\web;
+use yii\base;
 
 /**
  * Class ConfirmFormTest
@@ -21,6 +22,7 @@ class ConfirmFormTest extends TestCase
      */
     public function testInvalidTokenRepositoryDependency(): void
     {
+        $this->expectException();
         new Authentication\TwoFactor\ConfirmForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),

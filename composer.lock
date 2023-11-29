@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9103d701bcc0fd5a015f20cac6f29098",
+    "content-hash": "12a6bfc129c4841491f45e9c02524803",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -1313,6 +1313,55 @@
                 "source": "https://github.com/wearesho-team/yii2-authorization/tree/2.0.1"
             },
             "time": "2023-11-29T13:33:18+00:00"
+        },
+        {
+            "name": "wearesho-team/yii2-tokens",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wearesho-team/yii2-tokens.git",
+                "reference": "7dbf72bf232b9b448668e8be577b7b1144a57f51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wearesho-team/yii2-tokens/zipball/7dbf72bf232b9b448668e8be577b7b1144a57f51",
+                "reference": "7dbf72bf232b9b448668e8be577b7b1144a57f51",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.24 || ^1.22",
+                "php": "^7.4",
+                "ramsey/uuid": "^3.6",
+                "yiisoft/yii2": "^2.0.47",
+                "yiisoft/yii2-redis": "^2.0"
+            },
+            "require-dev": {
+                "horat1us/yii2-asset-free": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wearesho\\Yii2\\Token\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Letnikow",
+                    "email": "reclamme@gmail.com"
+                }
+            ],
+            "description": "Storing tokens (authorization, registration) in redis database.",
+            "support": {
+                "issues": "https://github.com/wearesho-team/yii2-tokens/issues",
+                "source": "https://github.com/wearesho-team/yii2-tokens/tree/1.1.0"
+            },
+            "time": "2022-11-30T14:18:46+00:00"
         },
         {
             "name": "yiisoft/yii2",
