@@ -8,19 +8,16 @@ use Wearesho\Yii\Http;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii2\Authentication\Tests\Mock;
 use Wearesho\Yii2\Token;
+use yii\base;
 
-/**
- * Class LoginFormTest
- * @package Wearesho\Yii2\Authentication\Tests\TwoFactor
- */
 class LoginFormTest extends TestCase
 {
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Authentication\TwoFactor\ConfigInterface is
-     */
     public function testInvalidConfigDependency(): void
     {
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Yii2\Authentication\TwoFactor\ConfigInterface is expected'
+        );
         new Authentication\TwoFactor\LoginForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
@@ -30,12 +27,12 @@ class LoginFormTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.
-     */
     public function testInvalidRepositoryDependency(): void
     {
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.'
+        );
         new Authentication\TwoFactor\LoginForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
@@ -46,12 +43,12 @@ class LoginFormTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Token\Generator
-     */
     public function testInvalidTokenGeneratorDependency(): void
     {
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Token\Generator is expected'
+        );
         new Authentication\TwoFactor\LoginForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
@@ -188,7 +185,7 @@ class LoginFormTest extends TestCase
         );
 
         $response = $form->getResponse();
-        $this->assertEquals(['hash' => $hash,], $response->data);
+        $this->assertEquals(['hash' => $hash, 'ttl' => 0,], $response->data);
         $this->assertEquals('aaaaaa', $token);
     }
 }
