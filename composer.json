@@ -17,6 +17,7 @@
   "require": {
     "php": ">=7.4",
     "horat1us/yii2-migration-bootstrap": "^1.3",
+    "wearesho-team/token-generator": "^1.2",
     "wearesho-team/yii-http": "^1.14",
     "wearesho-team/yii2-authorization": "^1.3 | ^2.0",
     "wearesho-team/yii2-tokens": "^1.1",
