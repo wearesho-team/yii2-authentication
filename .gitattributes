@@ -6,3 +6,4 @@
 /README.md export-ignore
 /composer.lock export-ignore
 /.github export-ignore
+/docs export-ignore
