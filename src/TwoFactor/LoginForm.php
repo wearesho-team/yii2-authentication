@@ -93,7 +93,7 @@ class LoginForm extends Http\Panel
         $ttlInterval = new \DateInterval("PT{$ttl}S");
 
         $token = new TokenEntity(
-            $this->request->userIP,
+            $this->request->userIP ?? '',
             $this->login,
             $value,
             $ttlInterval
