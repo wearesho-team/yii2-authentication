@@ -25,7 +25,7 @@ class LoginFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
-                'repository' => new \stdClass,
+                'repository' => new \stdClass(),
             ]
         );
     }

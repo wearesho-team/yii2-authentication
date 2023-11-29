@@ -25,7 +25,7 @@ class ConfirmFormTest extends TestCase
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
             [
-                'tokenRepository' => new \stdClass,
+                'tokenRepository' => new \stdClass(),
             ]
         );
     }
@@ -41,7 +41,7 @@ class ConfirmFormTest extends TestCase
             $this->createMock(Http\Response::class),
             [
                 'tokenRepository' => $this->createMock(Token\Repository::class),
-                'authorizationRepository' => new \stdClass,
+                'authorizationRepository' => new \stdClass(),
             ]
         );
     }

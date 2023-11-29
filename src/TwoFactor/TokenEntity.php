@@ -22,7 +22,7 @@ class TokenEntity extends Token\Entity
             'login',
             static::getOwner($ip, $login),
             $value,
-            (new \DateTime)->add($ttl)
+            (new \DateTime())->add($ttl)
         );
     }
 
