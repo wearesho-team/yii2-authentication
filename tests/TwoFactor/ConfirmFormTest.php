@@ -10,19 +10,12 @@ use Wearesho\Yii2\Token;
 use yii\web;
 use yii\base;
 
-/**
- * Class ConfirmFormTest
- * @package Wearesho\Yii2\Authentication\Tests\TwoFactor
- */
 class ConfirmFormTest extends TestCase
 {
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.
-     */
     public function testInvalidTokenRepositoryDependency(): void
     {
-        $this->expectException();
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage('Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.');
         new Authentication\TwoFactor\ConfirmForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
@@ -32,12 +25,12 @@ class ConfirmFormTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.
-     */
     public function testInvalidAuthorizationRepositoryDependency(): void
     {
+        $this->expectException(base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
+        );
         new Authentication\TwoFactor\ConfirmForm(
             $this->createMock(Http\Request::class),
             $this->createMock(Http\Response::class),
@@ -136,7 +129,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', 'invalid', new \DateTime())
+                new Token\Entity(
+                    'login',
+                    Authentication\TwoFactor\TokenEntity::generateOwner('', $form->login),
+                    'invalid',
+                    new \DateTime()
+                )
             );
 
         try {
@@ -170,7 +168,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', $form->token, new \DateTime())
+                new Token\Entity(
+                    'login',
+                    Authentication\TwoFactor\TokenEntity::generateOwner('', $form->login),
+                    $form->token,
+                    new \DateTime()
+                )
             );
 
         $form->identityClass = Authentication\Tests\Mock\Identity::class;
@@ -181,6 +184,8 @@ class ConfirmFormTest extends TestCase
         } catch (web\HttpException $exception) {
             $this->assertEquals(409, $exception->statusCode);
             $this->assertEquals('Hash and token were correct, but user not found', $exception->getMessage());
+        } catch (Http\Exceptions\HttpValidationException $exception) {
+            xdebug_break();
         }
 
         $this->assertInstanceOf(web\HttpException::class, $exception);
@@ -205,7 +210,12 @@ class ConfirmFormTest extends TestCase
         $tokenRepository->expects($this->once())
             ->method('get')
             ->willReturn(
-                new Token\Entity('login', 'test', $form->token, new \DateTime())
+                new Token\Entity(
+                    'login',
+                    Authentication\TwoFactor\TokenEntity::generateOwner('', $form->login),
+                    $form->token,
+                    new \DateTime()
+                )
             );
 
         $form->identityClass = Authentication\Tests\Mock\Identity::class;
