@@ -9,10 +9,6 @@ use Wearesho\Yii2\Authorization;
 use Wearesho\Yii2\Authentication;
 use Wearesho\Yii\Http;
 
-/**
- * Class RefreshTokenTest
- * @package Wearesho\Yii2\Authentication\Tests
- */
 class RefreshFormTest extends TestCase
 {
     public function testGeneratingNewTokenPair(): void
