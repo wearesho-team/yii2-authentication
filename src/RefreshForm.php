@@ -15,4 +15,9 @@ class RefreshForm extends LogoutForm
         $token = $this->repository->create($userId);
         return View::render($userId, $token);
     }
+
+    protected function responseStatusCode(): int
+    {
+        return 201;
+    }
 }

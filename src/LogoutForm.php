@@ -67,7 +67,7 @@ class LogoutForm extends Http\Panel
             );
         }
 
-        $this->response->statusCode = 205;
+        $this->response->statusCode = $this->responseStatusCode();
 
         return $this->map($userId);
     }
@@ -81,5 +81,10 @@ class LogoutForm extends Http\Panel
     protected function map(int $userId): array
     {
         return [];
+    }
+
+    protected function responseStatusCode(): int
+    {
+        return 205;
     }
 }
