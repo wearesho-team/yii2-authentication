@@ -19,8 +19,8 @@ class LoginFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Yii2\Authentication\TwoFactor\ConfigInterface is expected'
         );
         new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => new \stdClass(),
             ]
@@ -34,8 +34,8 @@ class LoginFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.'
         );
         new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
                 'repository' => new \stdClass(),
@@ -50,11 +50,11 @@ class LoginFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Token\Generator is expected'
         );
         new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
-                'repository' => $this->createMock(Token\Repository::class),
+                'repository' => $this->createStub(Token\Repository::class),
                 'tokenGenerator' => new \stdClass(),
             ]
         );
@@ -63,11 +63,11 @@ class LoginFormTest extends TestCase
     public function testMissingLogin(): void
     {
         $form = new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
-                'repository' => $this->createMock(Token\Repository::class),
+                'repository' => $this->createStub(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
@@ -77,11 +77,11 @@ class LoginFormTest extends TestCase
     public function testMissingPassword(): void
     {
         $form = new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
-                'repository' => $this->createMock(Token\Repository::class),
+                'repository' => $this->createStub(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
@@ -91,11 +91,11 @@ class LoginFormTest extends TestCase
     public function testInvalidLogin(): void
     {
         $form = new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
-                'repository' => $this->createMock(Token\Repository::class),
+                'repository' => $this->createStub(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
@@ -119,11 +119,11 @@ class LoginFormTest extends TestCase
     public function testInvalidPassword(): void
     {
         $form = new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'config' => Authentication\TwoFactor\EnvironmentConfig::class,
-                'repository' => $this->createMock(Token\Repository::class),
+                'repository' => $this->createStub(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(1, []),
             ]
         );
@@ -152,10 +152,10 @@ class LoginFormTest extends TestCase
     public function testSuccess(): void
     {
         $form = new Authentication\TwoFactor\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'config' => $this->createMock(Authentication\TwoFactor\EnvironmentConfig::class),
+                'config' => $this->createStub(Authentication\TwoFactor\EnvironmentConfig::class),
                 'repository' => $repository = $this->createMock(Token\Repository::class),
                 'tokenGenerator' => new Generator\Char(6, ['a']),
             ]

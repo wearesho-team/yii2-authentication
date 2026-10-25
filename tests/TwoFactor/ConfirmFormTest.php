@@ -17,8 +17,8 @@ class ConfirmFormTest extends TestCase
         $this->expectException(base\InvalidConfigException::class);
         $this->expectExceptionMessage('Invalid data type: stdClass. Wearesho\Yii2\Token\Repository is expected.');
         new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'tokenRepository' => new \stdClass(),
             ]
@@ -32,10 +32,10 @@ class ConfirmFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
         );
         new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'tokenRepository' => $this->createMock(Token\Repository::class),
+                'tokenRepository' => $this->createStub(Token\Repository::class),
                 'authorizationRepository' => new \stdClass(),
             ]
         );
@@ -44,11 +44,11 @@ class ConfirmFormTest extends TestCase
     public function testMissingHash(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'tokenRepository' => $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'tokenRepository' => $this->createStub(Token\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $this->assertFalse($form->validate(['hash']));
@@ -57,11 +57,11 @@ class ConfirmFormTest extends TestCase
     public function testMissingValue(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'tokenRepository' => $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'tokenRepository' => $this->createStub(Token\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $this->assertFalse($form->validate(['token']));
@@ -70,11 +70,11 @@ class ConfirmFormTest extends TestCase
     public function testMissingLogin(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'tokenRepository' => $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'tokenRepository' => $this->createStub(Token\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $this->assertFalse($form->validate(['login']));
@@ -83,11 +83,11 @@ class ConfirmFormTest extends TestCase
     public function testInvalidHash(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
 
@@ -114,11 +114,11 @@ class ConfirmFormTest extends TestCase
     public function testInvalidValue(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
 
@@ -152,12 +152,12 @@ class ConfirmFormTest extends TestCase
     public function testMissingUserWithCorrectValues(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'identityClass' => Authentication\Tests\Mock\Identity::class,
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),
-                'authorizationRepository' => $this->createMock(Authorization\Repository::class),
+                'authorizationRepository' => $this->createStub(Authorization\Repository::class),
             ]
         );
 
@@ -194,8 +194,8 @@ class ConfirmFormTest extends TestCase
     public function testCorrectResult(): void
     {
         $form = new Authentication\TwoFactor\ConfirmForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'identityClass' => Authentication\Tests\Mock\Identity::class,
                 'tokenRepository' => $tokenRepository = $this->createMock(Token\Repository::class),

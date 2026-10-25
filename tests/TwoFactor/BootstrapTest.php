@@ -12,6 +12,12 @@ use yii\web;
  */
 class BootstrapTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        \Yii::$app?->getErrorHandler()->unregister();
+        parent::tearDown();
+    }
+
     public function testBootstrap(): void
     {
         $app = new web\Application([

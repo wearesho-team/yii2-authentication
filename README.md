@@ -1,14 +1,16 @@
 # Yii2 Authentication
-[![Build Status](https://travis-ci.org/wearesho-team/yii2-authentication.svg?branch=master)](https://travis-ci.org/wearesho-team/yii2-authentication)
+[![Test & Lint](https://github.com/wearesho-team/yii2-authentication/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/wearesho-team/yii2-authentication/actions/workflows/php.yml)
 [![codecov](https://codecov.io/gh/wearesho-team/yii2-authentication/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/yii2-authentication)
 
 Simple Yii2 library to authenticate API users and generate
 authorization tokens using [wearesho-team/yii2-authorization](https://github.com/wearesho-team/yii2-authorization)
 
+Compatibility: tested on PHP 8.4, PHP 8.5
+
 ## Installation
 Using [composer](https://packagist.org)
 ```bash
-composer require wearesho-team/yii2-authentication:^1.0
+composer require wearesho-team/yii2-authentication:^1.4
 ```
 
 ## Usage
@@ -119,7 +121,7 @@ Current access token will be deleted, new one will be created and returned.
 ?refresh=*refresh token value*
 ```
 
-- Response 205 - Current token is being deleted and new one is created
+- Response 201 - Current token is being deleted and new one is created
 
 ```json
 {

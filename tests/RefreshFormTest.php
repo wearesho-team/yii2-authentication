@@ -14,7 +14,7 @@ class RefreshFormTest extends TestCase
     public function testGeneratingNewTokenPair(): void
     {
         $form = new Authentication\RefreshForm(
-            $this->createMock(Http\Request::class),
+            $this->createStub(Http\Request::class),
             new Http\Response([
                 'charset' => 'utf8',
             ]),
@@ -36,7 +36,7 @@ class RefreshFormTest extends TestCase
             ->willReturn($token = new Authorization\Token('access', 'refresh'));
 
         $response = $form->getResponse();
-        $this->assertEquals(205, $response->getStatusCode());
+        $this->assertEquals(201, $response->getStatusCode());
 
         $this->assertEquals(
             [

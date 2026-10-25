@@ -19,8 +19,8 @@ class LogoutFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
         );
         new Authentication\LogoutForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'repository' => new \stdClass(),
             ]
@@ -30,10 +30,10 @@ class LogoutFormTest extends TestCase
     public function testMissingRefreshToken(): void
     {
         $form = new Authentication\LogoutForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'repository' => $this->createMock(Authorization\Repository::class),
+                'repository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $form->refresh = null;
@@ -46,8 +46,8 @@ class LogoutFormTest extends TestCase
     public function testInvalidRefreshToken(): void
     {
         $form = new Authentication\LogoutForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'repository' => $repository = $this->createMock(Authorization\Repository::class),
             ]
@@ -75,7 +75,7 @@ class LogoutFormTest extends TestCase
     public function testValidRefreshTokenLogout(): void
     {
         $form = new Authentication\LogoutForm(
-            $this->createMock(Http\Request::class),
+            $this->createStub(Http\Request::class),
             new Http\Response([
                 'charset' => 'utf8',
             ]),
