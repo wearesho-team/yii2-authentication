@@ -19,8 +19,8 @@ class LoginFormTest extends TestCase
             'Invalid data type: stdClass. Wearesho\Yii2\Authorization\Repository is expected.'
         );
         new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'repository' => new \stdClass(),
             ]
@@ -30,10 +30,10 @@ class LoginFormTest extends TestCase
     public function testMissingLogin(): void
     {
         $form = new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'repository' => $this->createMock(Authorization\Repository::class),
+                'repository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $form->login = null;
@@ -45,10 +45,10 @@ class LoginFormTest extends TestCase
     public function testMissingPassword(): void
     {
         $form = new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'repository' => $this->createMock(Authorization\Repository::class),
+                'repository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $form->password = null;
@@ -60,10 +60,10 @@ class LoginFormTest extends TestCase
     public function testInvalidLogin(): void
     {
         $form = new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'repository' => $this->createMock(Authorization\Repository::class),
+                'repository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $form->login = 'invalid';
@@ -86,10 +86,10 @@ class LoginFormTest extends TestCase
     public function testInvalidPassword(): void
     {
         $form = new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
-                'repository' => $this->createMock(Authorization\Repository::class),
+                'repository' => $this->createStub(Authorization\Repository::class),
             ]
         );
         $form->login = 'invalid';
@@ -117,8 +117,8 @@ class LoginFormTest extends TestCase
     public function testGeneratingToken(): void
     {
         $form = new Authentication\LoginForm(
-            $this->createMock(Http\Request::class),
-            $this->createMock(Http\Response::class),
+            $this->createStub(Http\Request::class),
+            $this->createStub(Http\Response::class),
             [
                 'repository' => $repository = $this->createMock(Authorization\Repository::class),
             ]
